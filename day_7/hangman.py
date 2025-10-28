@@ -25,7 +25,7 @@ number_of_attempts = 6
 
 while not game_over:
 
-    print("**************************************???/6 LIVES LEFT**************************************")
+    print(f"**************************************{number_of_attempts}/6 LIVES LEFT**************************************")
     #User input for guessing a letter
     user_guess = input("Guess a letter: ").lower()
 
@@ -57,6 +57,7 @@ while not game_over:
             break
     print(display)
     print(stages[number_of_attempts])
+    print()
     if "_" not in display:
         game_over = True
         print("Congratulations! You've guessed the animal name correctly.")
