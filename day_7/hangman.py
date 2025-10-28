@@ -1,8 +1,11 @@
 #Import random module
 import random
 from hangman_words import animals
+from hangman_art import stages, logo
 
 #Start of the game Hangman
+print(logo)
+print()
 print("Welcome to Hangman!")
 print("Guess the animal name!\n")
 
@@ -17,13 +20,18 @@ print(placeholder)
 
 game_over = False
 correct_letters = []
-used_latters = []
+incorrect_latters = []
 number_of_attempts = 6
 
 while not game_over:
 
+    print("**************************************???/6 LIVES LEFT**************************************")
     #User input for guessing a letter
     user_guess = input("Guess a letter: ").lower()
+
+    if user_guess in incorrect_latters:
+        print(f"You've already guessed the letter '{user_guess}'. Try a different letter.")
+        continue
 
     #Allow the user 6 attempts to guess the animal name
     display = ""
@@ -36,7 +44,9 @@ while not game_over:
     
         else:
             display += "_"
-            used_latters.append(user_guess)
+            incorrect_latters.append(user_guess)
+
+
 
     if user_guess not in guess_random_animal:
         number_of_attempts -= 1
@@ -46,6 +56,7 @@ while not game_over:
             print(f"Game Over! The correct animal name was '{guess_random_animal}'.")
             break
     print(display)
+    print(stages[number_of_attempts])
     if "_" not in display:
         game_over = True
         print("Congratulations! You've guessed the animal name correctly.")
