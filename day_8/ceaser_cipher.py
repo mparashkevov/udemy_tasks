@@ -23,7 +23,7 @@ def decrypt(plain_text, shift_amount):
             decrypt_text += letter
     print(f"The decoded text is:\n{decrypt_text}")
 
-def again():
+def program():
     while True:
         action = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
         plain_text = input("Enter your message:\n").lower()
@@ -39,8 +39,4 @@ def again():
             print("Goodbye")
             break
 
-again()
-# if action == "decode":
-#     decrypt(plain_text, shift_amount)
-# elif action == "encode":
-#     encrypt(plain_text, shift_amount)
+program()
