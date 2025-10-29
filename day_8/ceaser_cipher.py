@@ -1,4 +1,7 @@
 #alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+print("Welcome to the Caesar Cipher Program!\n\n")
+
+
 alphabet = [chr(i) for i in range(97, 123)]  # Generates ['a' to 'z']
 
 def encrypt(plain_text, shift_amount):
