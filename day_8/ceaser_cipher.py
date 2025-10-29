@@ -1,6 +1,8 @@
-def greet():
-    print("This is a greeting function.")
-    print("Hello, World!")
-    print("Welcome to the Caesar Cipher program!")
+#name = input("Enter your name: ")
 
-greet()
+def greet(name):
+    print(f"Hello {name}.")
+    print(f"How are you today {name}?")
+    print(f"The weather today is great {name}!")
+
+greet("Martin")
