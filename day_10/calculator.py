@@ -33,8 +33,11 @@ def calculator():
         if continue_calc == 'y':
             num1 = answer
         elif continue_calc == 'n':
+            print("\n" * 30)
             calculator()
         else:
+            import os
+            os.system('clear')
             break
 
 print("Welcome to the Calculator!")
