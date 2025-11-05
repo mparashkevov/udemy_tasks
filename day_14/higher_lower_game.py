@@ -6,23 +6,27 @@ import game_data
 def clear_screen():
     os.system('clear' if os.name == 'posix' else 'cls')
 
-LOGO = r"""
- _    _ _       _                       _                 
-| |  | (_)     | |                     | |                
-| |__| |_  __ _| |__   ___  _ __   ___ | | ___   ___  ___ 
-|  __  | |/ _` | '_ \ / _ \| '_ \ / _ \| |/ _ \ / _ \/ __|
-| |  | | | (_| | | | | (_) | | | | (_) | | (_) |  __/\__ \
-|_|  |_|_|\__, |_| |_|\___/|_| |_|\___/|_|\___/ \___||___/
-           __/ |                                          
-          |___/                                           
+LOGO = """
+                                                               
+                                                               
+.   .         .                      .                         
+|   |  o      |                      |                         
+|---|  .  .-..|--. .-. .--.   ____   |    .-..  .    ._.-. .--.
+|   |  | (   ||  |(.-' |             |   (   )\  \  / (.-' |   
+'   '-' `-`-`|'  `-`--''             '---'`-'  `' `'   `--''   
+          ._.'                                                 
+                                                               
 """
 
+#
 DIV = "-" * 60
 
+# Format imported data for display
 def format_data(account):
     """Takes the account data and returns the printable format (without follower count)."""
     return f"{account['name']}, a {account['description']}, from {account['country']}"
 
+# Check if user is correct
 def check_answer(guess, a_followers, b_followers):
     """Returns True if user guess is correct."""
     if a_followers > b_followers:
