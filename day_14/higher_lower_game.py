@@ -73,7 +73,7 @@ def play_round():
         if is_correct:
             score += 1
             print(f"✅ Correct! Current score: {score}")
-            time.sleep(1.4)
+            time.sleep(2.0)
         else:
             print(f"❌ Wrong. Final score: {score}")
             break
