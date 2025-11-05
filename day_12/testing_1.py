@@ -1,8 +1,8 @@
-enemies = 1
+enemies = 6
 
-def increase_enemies():
-    enemies = 2
-    print(f"Enemies inside function: {enemies}")
+def incese_enemies(enemy):
+    print(f"Enemies inside function before increase: {enemies}")
+    return enemy + 2
 
-increase_enemies()
-print(f"Enemies outside function: {enemies}") 
+enemies = incese_enemies(enemies)
+print(f"Enemies outside function after increase: {enemies}")
