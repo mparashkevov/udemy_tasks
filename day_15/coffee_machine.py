@@ -9,17 +9,40 @@ import os
 MENU = {
     "espresso": {
         "ingredients": {"water": 50, "coffee": 18},
-        "cost": 1.5,
+        "cost": 2.0,
     },
     "latte": {
         "ingredients": {"water": 200, "milk": 150, "coffee": 24},
-        "cost": 2.5,
+        "cost": 3.0,
     },
     "cappuccino": {
         "ingredients": {"water": 250, "milk": 100, "coffee": 24},
-        "cost": 3.0,
+        "cost": 4.5,
     }
 }
+
+# Starting resources in the coffee machine
+STARTING_RESOURCES = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+    "money": 0.0,
+}
+
+# Coffee machine start sequence
+def coffee_machine_start_sequence():
+    print("Starting the coffee machine...")
+    animate_progress_bar(duration=3)
+    clear_screen()
+    print("Coffee machine is ready to use!")
+
+
+
+# Reset resources to starting values
+def reset_resources():
+    global resources
+    resources = STARTING_RESOURCES.copy()
+    print("Resources have been reset to starting values.")
 
 # Initial resources in the coffee machine
 resources = {
@@ -111,24 +134,62 @@ def clear_screen():
     os.system('clear' if os.name == 'posix' else 'cls')
 
 # Main coffee machine function
+# def coffee_machine():
+#     while True:
+#         choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
+#         if choice == "off":
+#             print("Turning off the coffee machine. Goodbye!")
+#             animate_progress_bar(duration=3)
+#             clear_screen()
+#             break
+#         elif choice == "report":
+#             print_report()
+#         elif choice in MENU:
+#             drink = MENU[choice]
+#             if is_resource_sufficient(drink["ingredients"]):
+#                 payment = process_coins()
+#                 if is_transaction_successful(payment, drink["cost"]):
+#                     make_coffee(choice, drink["ingredients"])
+#         else:
+#             print("Invalid selection. Please choose espresso, latte, or cappuccino.")
+
 def coffee_machine():
+    coffee_machine_start_sequence()
+    drink_options = {
+        "1": "espresso",
+        "2": "latte",
+        "3": "cappuccino"
+    }
+
     while True:
-        choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
-        if choice == "off":
+        print("\nPlease choose your drink:")
+        for key, drink in drink_options.items():
+            price = MENU[drink]["cost"]
+            print(f'Press "{key}" for {drink} with price ${price}')
+        print('Press "4" to view machine status')
+        print('Press "5" to turn off the machine')
+        print('Press "6" to reset machine resources')
+
+        choice = input("Your selection: ").lower()
+
+        if choice == "5":
             print("Turning off the coffee machine. Goodbye!")
             animate_progress_bar(duration=3)
             clear_screen()
             break
-        elif choice == "report":
+        elif choice == "4":
             print_report()
-        elif choice in MENU:
-            drink = MENU[choice]
+        elif choice == "6":
+            reset_resources()
+        elif choice in drink_options:
+            drink_name = drink_options[choice]
+            drink = MENU[drink_name]
             if is_resource_sufficient(drink["ingredients"]):
                 payment = process_coins()
                 if is_transaction_successful(payment, drink["cost"]):
-                    make_coffee(choice, drink["ingredients"])
+                    make_coffee(drink_name, drink["ingredients"])
         else:
-            print("Invalid selection. Please choose espresso, latte, or cappuccino.")
+            print("Invalid selection. Please choose a valid number or command.")
 
 # Run the coffee machine
 coffee_machine()
