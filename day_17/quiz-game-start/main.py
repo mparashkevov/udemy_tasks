@@ -6,8 +6,8 @@ question_bank = []
 
 # Create a Question object from each entry in question_data
 for question in question_data:
-	question_text = question["question"]
-	question_answer = question["corrent_answer"]
+	question_text = question["text"]
+	question_answer = question["answer"]
 	new_question = Question(question_text, question_answer)
 	question_bank.append(new_question)
 
