@@ -2,13 +2,23 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+# Global capacity setting (change here to update default capacity)
+PARKING_CAPACITY = 100
+
+# ANSI color codes for menu styling
+RESET = "\033[0m"
+BOLD = "\033[1m"
+CYAN = "\033[96m"
+YELLOW = "\033[93m"
+RED = "\033[91m"
+
 
 @dataclass
 class ParkingLot:
     # Total number of parking spaces (easy to adjust)
-    capacity: int = 100
-    # Keep unique license plates of parked vehicles
-    parked_vehicles: set[str] = field(default_factory=set)
+    capacity: int = PARKING_CAPACITY
+    # Map parking spot number -> license plate
+    parked_vehicles: dict[int, str] = field(default_factory=dict)
 
     @property
     def occupied_count(self) -> int:
@@ -24,34 +34,49 @@ class ParkingLot:
         # Check if the parking lot is full
         return self.occupied_count >= self.capacity
 
-    def park(self, license_plate: str) -> bool:
+    def park(self, license_plate: str) -> int | None:
         # Normalize plate input for consistent storage
         normalized = license_plate.strip().upper()
         if not normalized:
-            return False
+            return None
         if self.is_full():
-            return False
-        if normalized in self.parked_vehicles:
-            return False
-        self.parked_vehicles.add(normalized)
-        return True
+            return None
+        if normalized in self.parked_vehicles.values():
+            return None
+        spot = self._next_available_spot()
+        if spot is None:
+            return None
+        self.parked_vehicles[spot] = normalized
+        return spot
 
     def remove(self, license_plate: str) -> bool:
         # Remove a vehicle by plate if present
         normalized = license_plate.strip().upper()
-        if normalized in self.parked_vehicles:
-            self.parked_vehicles.remove(normalized)
-            return True
+        for spot, plate in list(self.parked_vehicles.items()):
+            if plate == normalized:
+                del self.parked_vehicles[spot]
+                return True
         return False
 
     def list_plates(self) -> list[str]:
         # Return plates in alphabetical order
-        return sorted(self.parked_vehicles)
+        return sorted(self.parked_vehicles.values())
+
+    def list_spots(self) -> list[tuple[int, str]]:
+        # Return (spot, plate) sorted by spot number
+        return sorted(self.parked_vehicles.items())
+
+    def _next_available_spot(self) -> int | None:
+        # Find the smallest available spot number
+        for spot in range(1, self.capacity + 1):
+            if spot not in self.parked_vehicles:
+                return spot
+        return None
 
 
 class ParkingSystemApp:
     # Simple console UI wrapper around ParkingLot
-    def __init__(self, capacity: int = 100) -> None:
+    def __init__(self, capacity: int = PARKING_CAPACITY) -> None:
         self.lot = ParkingLot(capacity=capacity)
 
     def run(self) -> None:
@@ -77,19 +102,21 @@ class ParkingSystemApp:
 
     def _print_menu(self) -> None:
         # Show the menu options
-        print("\n=== Car Parking System ===")
-        print("1. Park a vehicle")
-        print("2. Remove a vehicle")
-        print("3. Vehicles in the parking")
-        print("4. Free parking spaces")
-        print("5. List license plates")
-        print("0. Exit")
+        print(f"\n{BOLD}{CYAN}=== Car Parking System ==={RESET}")
+        print(f"{YELLOW}1. Park a vehicle{RESET}")
+        print(f"{YELLOW}2. Remove a vehicle{RESET}")
+        print(f"{YELLOW}3. Vehicles in the parking{RESET}")
+        print(f"{YELLOW}4. Free parking spaces{RESET}")
+        print(f"{YELLOW}5. List license plates{RESET}")
+        print(f"{RED}0. Exit{RESET}")
 
     def _handle_park(self) -> None:
         # Park a new vehicle
         plate = input("Enter license plate: ")
-        if self.lot.park(plate):
+        spot = self.lot.park(plate)
+        if spot is not None:
             print("Vehicle parked.")
+            self._print_parking_stats()
         else:
             if self.lot.is_full():
                 print("Parking is full.")
@@ -122,8 +149,21 @@ class ParkingSystemApp:
         for plate in plates:
             print(f"- {plate}")
 
+    def _print_parking_stats(self) -> None:
+        # Print summary stats after parking
+        print()
+        print("=" * 30)
+        print("Current parking status:")
+        print(f"Free parking spots: {self.lot.free_spaces}/{self.lot.capacity}")
+        print("Currently parked vehicles:")
+        for spot, plate in self.lot.list_spots():
+            print(f"  Spot {spot}: {plate}")
+        print(f"Total parked: {self.lot.occupied_count}")
+        print("=" * 30)
+        print()
+
 
 if __name__ == "__main__":
     # Start the app with default capacity (adjust if needed)
-    app = ParkingSystemApp(capacity=100)
+    app = ParkingSystemApp(capacity=PARKING_CAPACITY)
     app.run()
