@@ -53,6 +53,9 @@ class ParkingSystemApp:
     def _handle_park(self) -> None:
         # Park a new vehicle
         plate = input("Enter license plate: ")
+        if not self.lot.is_approved(plate):
+            print("Car not allowed to park in this parking")
+            return
         spot = self.lot.park(plate)
         if spot is not None:
             print("Vehicle parked.")

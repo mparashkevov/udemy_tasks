@@ -26,6 +26,13 @@ class ParkingLot:
         # Check if the parking lot is full
         return self.occupied_count >= self.capacity
 
+    def is_approved(self, license_plate: str) -> bool:
+        # Check if a plate is in the approved list
+        normalized = license_plate.strip().upper()
+        if not normalized:
+            return False
+        return normalized in self.approved_plates
+
     def park(self, license_plate: str) -> int | None:
         # Normalize plate input for consistent storage
         normalized = license_plate.strip().upper()
