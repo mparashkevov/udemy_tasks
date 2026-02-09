@@ -5,6 +5,13 @@ from dataclasses import dataclass, field
 # Global capacity setting (change here to update default capacity)
 PARKING_CAPACITY = 100
 
+# Approved vehicles allowed to enter (change here as needed)
+APPROVED_PLATES = {
+    "BH4985BT",
+    "CB0391KT",
+    "BT2121PA",
+}
+
 # ANSI color codes for menu styling
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -19,6 +26,8 @@ class ParkingLot:
     capacity: int = PARKING_CAPACITY
     # Map parking spot number -> license plate
     parked_vehicles: dict[int, str] = field(default_factory=dict)
+    # Set of approved license plates
+    approved_plates: set[str] = field(default_factory=lambda: set(APPROVED_PLATES))
 
     @property
     def occupied_count(self) -> int:
@@ -38,6 +47,8 @@ class ParkingLot:
         # Normalize plate input for consistent storage
         normalized = license_plate.strip().upper()
         if not normalized:
+            return None
+        if normalized not in self.approved_plates:
             return None
         if self.is_full():
             return None
