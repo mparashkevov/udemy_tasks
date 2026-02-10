@@ -53,6 +53,9 @@ class ParkingSystemApp:
     def _handle_park(self) -> None:
         # Park a new vehicle
         plate = input("Enter license plate: ")
+        if plate == "":
+            print("License plate cannot be empty.")
+            return
         if not self.lot.is_approved(plate):
             print("Car not allowed to park in this parking")
             return
@@ -69,6 +72,9 @@ class ParkingSystemApp:
     def _handle_remove(self) -> None:
         # Remove an existing vehicle
         plate = input("Enter license plate to remove: ")
+        if plate == "":
+            print("License plate cannot be empty.")
+            return
         if self.lot.remove(plate):
             print("Vehicle removed.")
         else:
