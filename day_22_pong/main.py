@@ -1,4 +1,4 @@
-from turtle import Screen
+from turtle import Screen, Turtle
 from ball import Ball
 from paddle import Paddle
 from scoreboard import Scoreboard
@@ -6,9 +6,23 @@ import time
 
 screen = Screen()
 screen.bgcolor("black")
-screen.title("Pong")
+screen.title("P O N G")
 screen.setup(width=800, height=600)
 screen.tracer(0)
+
+# Draw the net
+net = Turtle()
+net.color("white")
+net.penup()
+net.hideturtle()
+net.goto(0, -300)
+net.setheading(90)
+net.pensize(3)
+for _ in range(30):
+    net.pendown()
+    net.forward(10)
+    net.penup()
+    net.forward(10)
     
 r_paddle = Paddle((350, 0))
 l_paddle = Paddle((-350, 0))
