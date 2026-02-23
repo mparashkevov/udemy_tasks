@@ -1,11 +1,10 @@
-from re import S
-
 from ball import Ball
 from paddle import Paddle
 from scoreboard import Scoreboard
 from game_screen import GameScreen
 import time
 
+# Paddle colors and initial ball delay (lower is faster)
 R_COLOR = "red"
 L_COLOR = "blue"
 STARTING_SPEED = 0.06
@@ -31,7 +30,7 @@ screen.bind_keys(r_paddle, l_paddle, start_game)
 while True:
     screen.update()
     if not game_is_on:
-        # Idle loop while waiting for SPACE; small sleep to avoid maxing CPU
+        # Idle loop while waiting for SPACE
         time.sleep(STARTING_SPEED)
         continue
 

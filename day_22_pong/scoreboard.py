@@ -31,6 +31,7 @@ class Scoreboard(Turtle):
         self.write("GAME OVER", align="center", font=("Courier", 80, "normal"))
         
     def check_winner(self):
+        # First to 10 points ends the game
         if self.left_score >= 10 or self.right_score >= 10:
             self.game_over()
             return True

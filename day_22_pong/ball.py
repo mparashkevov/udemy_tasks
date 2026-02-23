@@ -9,6 +9,7 @@ class Ball(Turtle):
         self.penup()
         self.x_move = 10
         self.y_move = 10
+        # Allow caller to control initial and reset speed
         self.starting_speed = starting_speed
         self.move_speed = starting_speed
 

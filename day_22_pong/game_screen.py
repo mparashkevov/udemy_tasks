@@ -9,7 +9,7 @@ class GameScreen:
         self.display.setup(width=800, height=600)
         self.display.tracer(0)
         
-        # Start Screen Menu
+        # Start screen prompt shown until SPACE is pressed
         self.start_text = Turtle()
         self.start_text.color("white")
         self.start_text.penup()
@@ -21,6 +21,7 @@ class GameScreen:
         self.start_text.clear()
 
     def bind_keys(self, r_paddle, l_paddle, start_game_func):
+        # Centralize keyboard bindings so main stays clean
         self.display.listen()
         self.display.onkeypress(r_paddle.start_up, "Up")
         self.display.onkeyrelease(r_paddle.stop_up, "Up")

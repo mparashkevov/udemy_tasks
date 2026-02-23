@@ -25,6 +25,7 @@ class Paddle(Turtle):
         self.moving_down = False
 
     def move(self):
+        # Clamp paddle movement within playfield bounds
         if self.moving_up and self.ycor() < 240:
             self.goto(self.xcor(), self.ycor() + 20)
         if self.moving_down and self.ycor() > -240:
