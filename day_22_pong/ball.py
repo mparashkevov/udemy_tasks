@@ -20,7 +20,9 @@ class Ball(Turtle):
 
     def bounce_x(self):
         self.x_move *= -1
-        self.move_speed *= 0.9
+        # Cap the maximum speed so the game remains playable
+        if self.move_speed > 0.02:
+            self.move_speed *= 0.9
 
     def reset_position(self):
         self.goto(0, 0)
