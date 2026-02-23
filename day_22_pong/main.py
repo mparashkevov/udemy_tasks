@@ -2,42 +2,26 @@ from turtle import Screen, Turtle
 from ball import Ball
 from paddle import Paddle
 from scoreboard import Scoreboard
+from game_screen import GameScreen
 import time
 
-screen = Screen()
-screen.bgcolor("black")
-screen.title("P O N G")
-screen.setup(width=800, height=600)
-screen.tracer(0)
+screen = GameScreen()
+screen.draw_net()
 
-# Draw the net
-net = Turtle()
-net.color("white")
-net.penup()
-net.hideturtle()
-net.goto(0, -300)
-net.setheading(90)
-net.pensize(3)
-for _ in range(30):
-    net.pendown()
-    net.forward(10)
-    net.penup()
-    net.forward(10)
-    
 r_paddle = Paddle((350, 0))
 l_paddle = Paddle((-350, 0))
 score = Scoreboard()
 
-screen.listen()
-screen.onkeypress(r_paddle.start_up, "Up")
-screen.onkeyrelease(r_paddle.stop_up, "Up")
-screen.onkeypress(r_paddle.start_down, "Down")
-screen.onkeyrelease(r_paddle.stop_down, "Down")
+screen.display.listen()
+screen.display.onkeypress(r_paddle.start_up, "Up")
+screen.display.onkeyrelease(r_paddle.stop_up, "Up")
+screen.display.onkeypress(r_paddle.start_down, "Down")
+screen.display.onkeyrelease(r_paddle.stop_down, "Down")
 
-screen.onkeypress(l_paddle.start_up, "w")
-screen.onkeyrelease(l_paddle.stop_up, "w")
-screen.onkeypress(l_paddle.start_down, "s")
-screen.onkeyrelease(l_paddle.stop_down, "s")
+screen.display.onkeypress(l_paddle.start_up, "w")
+screen.display.onkeyrelease(l_paddle.stop_up, "w")
+screen.display.onkeypress(l_paddle.start_down, "s")
+screen.display.onkeyrelease(l_paddle.stop_down, "s")
 
 ball = Ball()
 
@@ -47,7 +31,7 @@ while game_is_on:
     r_paddle.move()
     l_paddle.move()
     ball.move()
-    screen.update()
+    screen.display.update()
 
     # Detect collision with wall
     if ball.ycor() > 280 or ball.ycor() < -280:
@@ -67,4 +51,4 @@ while game_is_on:
         score.increase_right_score()
         ball.reset_position()
 
-screen.exitonclick()
+screen.display.exitonclick()
