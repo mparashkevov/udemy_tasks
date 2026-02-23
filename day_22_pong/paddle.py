@@ -2,10 +2,10 @@ from turtle import Turtle
 
 class Paddle(Turtle):
 
-    def __init__(self, position):
+    def __init__(self, position, color="white"):
         super().__init__()
         self.shape("square")
-        self.color("white")
+        self.color(color)
         self.shapesize(stretch_wid=5, stretch_len=1)
         self.penup()
         self.goto(position)
@@ -25,7 +25,7 @@ class Paddle(Turtle):
         self.moving_down = False
 
     def move(self):
-        if self.moving_up and self.ycor() < 250:
+        if self.moving_up and self.ycor() < 240:
             self.goto(self.xcor(), self.ycor() + 20)
-        if self.moving_down and self.ycor() > -250:
+        if self.moving_down and self.ycor() > -240:
             self.goto(self.xcor(), self.ycor() - 20)
