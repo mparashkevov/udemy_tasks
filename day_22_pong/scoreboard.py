@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 class Scoreboard(Turtle):
-    
+
     def __init__(self):
         super().__init__()
         self.color("white")
@@ -25,3 +25,13 @@ class Scoreboard(Turtle):
     def increase_right_score(self):
         self.right_score += 1
         self.display_score()
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write("GAME OVER", align="center", font=("Courier", 80, "normal"))
+        
+    def check_winner(self):
+        if self.left_score >= 10 or self.right_score >= 10:
+            self.game_over()
+            return True
+        return False

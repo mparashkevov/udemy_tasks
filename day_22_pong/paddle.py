@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 class Paddle(Turtle):
-    
+
     def __init__(self, position):
         super().__init__()
         self.shape("square")
@@ -25,7 +25,7 @@ class Paddle(Turtle):
         self.moving_down = False
 
     def move(self):
-        if self.moving_up:
+        if self.moving_up and self.ycor() < 250:
             self.goto(self.xcor(), self.ycor() + 20)
-        if self.moving_down:
+        if self.moving_down and self.ycor() > -250:
             self.goto(self.xcor(), self.ycor() - 20)
